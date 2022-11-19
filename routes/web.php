@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +18,32 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('main');
 
+//autentifiacion ui
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//ruta de productos
+Route::get('products',[ProductController::class, 'index'])->name('products.index');
+
+//creamos productos
+Route::post('products/create',[ProductController::class, 'create'])->name('products.create');
+
+//mostrar formulario de edicion
+Route::get('products/store',[ProductController::class, 'store'])->name('products.store');
+
+//lista de productos
+Route::get('products/{product}',[ProductController::class, 'show'])->name('products.show');
+
+//lista de productos
+//Route::post('products/{product}/edit',[ProductController::class, 'edit'])->name('products.edit');
+
+//Route::match(['put','patch'] ,[ProductController::class, 'update'])->name('products.update');
+
+Route::delete('products/{product}',[ProductController::class, 'destroy'])->name('products.destroy');
 
 
 
