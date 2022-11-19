@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use Termwind\Components\Dd;
+
 class ProductController extends Controller
 {
     //
 
     public function index(){
 
-
+        $products=DB::table('products')->get();
+        //dd($products);
 
 
         return view('products.index');
@@ -25,8 +29,11 @@ class ProductController extends Controller
 
     public function show($product){
 
-        
-        return view('products.show');
+        $product=DB::table('products')->where('id',$product)->get();
+
+        dd($product);
+
+        return view('products.show' , ['product' => $product]);
     }
 
     public function edit($product){
