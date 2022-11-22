@@ -26,10 +26,25 @@ class ProductController extends Controller
     }
 
     public function create(){
+
         return view('products.create');
     }
     public function store(){
-        return view('products.store');
+        //forma anterior
+        /*$product=Product::create([
+            'title' => request('title'),
+            'description' => request('description'),
+            'price' => request('price'),
+            'stock' => request('stock'),
+            'status' => request('status'),
+        ]);*/
+        //forma rapida
+        $product= Product::create(request()->all());
+
+
+        //dd('estamos aqui en el store');
+        //return view('products.store');
+        return $product;
     }
 
     public function show($product){
@@ -47,14 +62,29 @@ class ProductController extends Controller
     }
 
     public function edit($product){
-        return view('products.edit');
+
+
+
+        return view('products.edit')->with([
+            'product' => Product::findOrfail($product),//vista 404 no se encontro la vista
+        ]);
     }
     public function update($product){
-        return view('products.update');
+
+        $product=Product::findOrfail($product);
+        //actualiza toda la tabla con los datos que se le pasan
+        $product->update(request()->all());
+
+        //return view('products.');
     }
 
     public function destroy($product){
-        return view('products.destroy');
+        //el producto existe
+        $product=Product::findOrfail($product);
+        $product->delete();
+
+        //return view('products.destroy');
+        return $product;
     }
 
 
