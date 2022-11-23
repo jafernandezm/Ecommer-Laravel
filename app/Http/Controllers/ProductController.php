@@ -10,7 +10,6 @@ use Termwind\Components\Dd;
 
 class ProductController extends Controller
 {
-    //
 
     public function index(){
         //genera todos los productos
@@ -30,6 +29,24 @@ class ProductController extends Controller
         return view('products.create');
     }
     public function store(){
+        $rules=[
+            'title'=> ['required','max:255'],
+            'description'=> ['required','max:1000'],
+            'price'=> ['required','min:1'],
+            'stock'=> ['required','min:0'],
+            'status'=> ['required','in:available,unavailable'],
+        ];
+        
+        request()->validate($rules);
+
+        //sesiones para guardar los datos
+        if(request()->status =='available' && request()->stock == 0){
+            //session()->put('error','El producto no puede estar disponible sin stock');
+            session()->flash('error','El producto no puede estar disponible sin stock');
+            return redirect()->back();
+        }
+
+        //session()->forget('error');
         //forma anterior
         /*$product=Product::create([
             'title' => request('title'),
@@ -41,19 +58,19 @@ class ProductController extends Controller
         //forma rapida
         $product= Product::create(request()->all());
 
-
-        //dd('estamos aqui en el store');
-        //return view('products.store');
-        return $product;
+        //formas de redireccionar
+        //return redirect('/products');
+        //return redirect()->back();//manda una redireccion a la pagina anterior
+        //return redirect()->action([ProductController::class, 'index']); //redirecciona a la ruta index
+        return redirect()->route('products.index'); // redirecciona a la ruta index
     }
+
 
     public function show($product){
         //obtener el producto el unico que coincida con el id
         $product=Product::findOrfail($product);
         #$product=DB::table('products')->find($product);
         //$product=DB::table('products')->where('id',$product)->first();
-
-
         //dd($product);
 
         return view('products.show')->with([
@@ -63,19 +80,26 @@ class ProductController extends Controller
 
     public function edit($product){
 
-
-
         return view('products.edit')->with([
             'product' => Product::findOrfail($product),//vista 404 no se encontro la vista
         ]);
     }
     public function update($product){
-
+        $rules=[
+            'title'=> ['required','max:255'],
+            'description'=> ['required','max:1000'],
+            'price'=> ['required','min:1'],
+            'stock'=> ['required','min:0'],
+            'status'=> ['required','in:available,unavailable'],
+        ];
+        
+        request()->validate($rules);
+        
         $product=Product::findOrfail($product);
         //actualiza toda la tabla con los datos que se le pasan
         $product->update(request()->all());
 
-        //return view('products.');
+        return redirect()->route('products.index');
     }
 
     public function destroy($product){
@@ -84,7 +108,7 @@ class ProductController extends Controller
         $product->delete();
 
         //return view('products.destroy');
-        return $product;
+        return redirect()->route('products.index');
     }
 
 

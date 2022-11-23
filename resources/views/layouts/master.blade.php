@@ -9,8 +9,17 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    {{-- nombre de la vista --}}
-  @yield('content')
+  <div class="container">
+    {{--@dump($errors)  --}}
+    @if(session()->has('error') )
+    <div class="alert alert-danger">
+      {{ session()->get('error') }}
+    </div>
+    @endif
+      {{-- nombre de la vista --}}
+    @yield('content')
+  </div>
+ 
 
 </body>
 </html>
