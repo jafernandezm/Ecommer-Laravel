@@ -39,11 +39,14 @@ class ProductController extends Controller
         
         request()->validate($rules);
 
-        //sesiones para guardar los datos
+        //sesiones para guardar los datos available->'diponiobles' y  unavailable:'no disponibles'
         if(request()->status =='available' && request()->stock == 0){
             //session()->put('error','El producto no puede estar disponible sin stock');
-            session()->flash('error','El producto no puede estar disponible sin stock');
-            return redirect()->back();
+            //redirecciona a la pagina anterior con los datos withInput
+            return redirect()
+            ->back()
+            ->withInput(request()->all())
+            ->withErrors('El stock debe ser mayor a 0 si el producto esta disponible');
         }
 
         //session()->forget('error');
@@ -57,12 +60,15 @@ class ProductController extends Controller
         ]);*/
         //forma rapida
         $product= Product::create(request()->all());
-
+        #session()->flash('success','El producto se creo con exito');
         //formas de redireccionar
         //return redirect('/products');
         //return redirect()->back();//manda una redireccion a la pagina anterior
         //return redirect()->action([ProductController::class, 'index']); //redirecciona a la ruta index
-        return redirect()->route('products.index'); // redirecciona a la ruta index
+        return redirect()
+        ->route('products.index')
+        ->withSuccess('El producto se creo con exito'); // redirecciona a la ruta index
+        //->wiht('success','El producto se creo con exito'); // redirecciona a la ruta index
     }
 
 
@@ -99,7 +105,9 @@ class ProductController extends Controller
         //actualiza toda la tabla con los datos que se le pasan
         $product->update(request()->all());
 
-        return redirect()->route('products.index');
+        return redirect()
+        ->route('products.index')
+        ->withSuccess('El producto se actualizo correctamente');
     }
 
     public function destroy($product){
@@ -108,7 +116,9 @@ class ProductController extends Controller
         $product->delete();
 
         //return view('products.destroy');
-        return redirect()->route('products.index');
+        return redirect()
+        ->route('products.index')
+        ->withSuccess('El producto fue eliminado correctamente');
     }
 
 

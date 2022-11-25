@@ -11,15 +11,31 @@
 <body>
   <div class="container">
     {{--@dump($errors)  --}}
-    @if(session()->has('error') )
-    <div class="alert alert-danger">
-      {{ session()->get('error') }}
-    </div>
+
+    @if(session()->has('success') )
+      <div class="alert alert-success">
+        {{ session()->get('success') }}
+      </div>
     @endif
       {{-- nombre de la vista --}}
+
+
+    {{-- verifica si hay algun error en la veriable error --}}
+    @if (isset($errors) && $errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+
+
     @yield('content')
   </div>
  
+
 
 </body>
 </html>
