@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -31,7 +31,7 @@
                     <option {{old('status')  == 'unavailable' ? 'selected' : ''}} value="unavailable" >No disponible</option>
                 </select>
             </div>
-            <div class="form-row">
+            <div class="form-row mt-3">
                 <button type="submit" class="btn btn-primary btn-lg">Crear {{-- Create --}}</button>
             </div>
         </form>

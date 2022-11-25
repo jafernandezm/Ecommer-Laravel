@@ -10,7 +10,14 @@ use Termwind\Components\Dd;
 
 class ProductController extends Controller
 {
-
+    public function __construct()
+    {
+        //
+        $this->middleware('auth');
+        //$this->middleware('auth')->except(['index','show']); //excepto a estas rutas el login
+        //$this->middleware('auth')->only(['create','store']);  //solo a estas rutas el login
+    }
+    
     public function index(){
         //genera todos los productos
         $products=Product::all();

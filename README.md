@@ -1,66 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+comandos al principio 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+```PHP
+ php artisan serve
+ npm install && npm run dev
+ para pasar a produccion los estilos y los js y css  
+ npm run build
+```
+instalar autenticacion laravel
+```bash
+composer require laravel/ui
 
-## About Laravel
+php artisan serve
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+grupo de comandos 
+```
+ui
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+opciones que tenemos
+    php artisan ui
+```
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+instalacion de autentificacion
+```
+php artisan ui bootstrap --auth
+npm install && npm run dev
+```
+instalacion de base de datos en laravel
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Learning Laravel
+para mostrar las rutas que tenemos en laravel en la carpeta de router web 
+```
+comando rutas 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+php artisan route:list
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Crear controladores 
 
-## Laravel Sponsors
+```bash
+    php artisan make:controller ProductController
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Comandos para migraciones 
+```
+    php artisan make:migration CreateProductsTable
+```
 
-### Premium Partners
+Comandos para base de datos 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+vuelve a cargar todo y borrar todo
+ php artisan migrate:fresh    
 
-## Contributing
+ php artisan migrate:fresh --seed actualiza los sideer y la base de datos 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+ //y solo para los seed se encuentra en la carpeta database  seeders
+ php artisan db-seed
 
-## Code of Conduct
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Comandos para crear modelos 
+```
+    php artisan make:model Product
+```
 
-## Security Vulnerabilities
+comandos para crear factoris en database base de datos
+```
+    php artisan make:factory ProductFactory --model=Product
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+cuando hacemos un crud y vemos la manera de hacerlo  mas rapido
+```PHP codigo
+    rutas app/http/controller- ejemplo Producto tenemos los campos para llenar por defecto y donde tenemos eso 
+     public function store(){
+        //forma anterior
+        /*$product=Product::create([
+            'title' => request('title'),
+            'description' => request('description'),
+            'price' => request('price'),
+            'stock' => request('stock'),
+            'status' => request('status'),
+        ]);*/
+        //forma rapida
+        $product= Product::create(request()->all());
+
+
+        //dd('estamos aqui en el store');
+        //return view('products.store');
+        return $product;
+    }
+    lo tenemos en la carpeta app/http/models/Producto
+        protected $fillable = [
+        'title',
+        'description',
+        'price',
+        'stock',
+        'status',
+    ];
+    los campos que tengamos en filable solo llenara eso de la forma rapida 
+    
+```
+
+Redireccinamiento de paginas a la ruta dicha es con 
+```PHP
+      public function store(){
+        $product= Product::create(request()->all());
+        return redirect()->back();//manda una redireccion a la pagina anterior
+        return redirect()->action([ProductController::class, 'index']); //redirecciona a la ruta index
+        return redirect()->route('products.index'); // redirecciona a la ruta index
+    }
+
+```
+
+verificar sessiones de exito o error
+```php
+    //productController
+    public function store(){
+        if(request()->status =='available' && request()->stock == 0){
+            //session()->put('error','El producto no puede estar disponible sin stock');
+            session()->flash('error','El producto no puede estar disponible sin stock');
+            //redirecciona a la pagina anterior con los datos withInput
+            return redirect()->back()->withInput(request()->all());
+        }
+    }
+    //master funcion para comprobar sessiones 
+     @if(session()->has('error') )
+      <div class="alert alert-danger">
+        {{ session()->get('error') }}
+      </div>
+    @endif
+```
+
+
+tipos de middlenware para controllar el login un ejemplo
+```php
+       //
+        $this->middleware('auth');// todas las funciones del Controlador
+        $this->middleware('auth')->except(['index','show']); //excepto a estas rutas el login
+        $this->middleware('auth')->only(['create','store']);  //solo a estas rutas el login
+```
