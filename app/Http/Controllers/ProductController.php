@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        //
+        //verifica la autentificacion de login 
         $this->middleware('auth');
         //$this->middleware('auth')->except(['index','show']); //excepto a estas rutas el login
         //$this->middleware('auth')->only(['create','store']);  //solo a estas rutas el login

@@ -5,6 +5,8 @@ comandos al principio
  npm install && npm run dev
  para pasar a produccion los estilos y los js y css  
  npm run build
+ tambien tenemos composer update
+ 
 ```
 instalar autenticacion laravel
 ```bash
