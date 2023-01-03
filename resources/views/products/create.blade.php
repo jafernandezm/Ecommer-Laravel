@@ -21,7 +21,7 @@
             </div>
             <div class="form-row">
                 <label>Cantidad {{-- Stock --}}</label>
-                <input class="form-control" type="text" name="stock" value="{{ old('stock') }}" required>
+                <input class="form-control" type="number" name="stock" value="{{ old('stock') }}" required>
             </div>
             <div class="form-row">
                 <label >Estado {{-- status --}}</label>

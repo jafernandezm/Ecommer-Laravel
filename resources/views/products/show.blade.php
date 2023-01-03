@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="container">
-        <h1>show list {{ $product['description'] }}</h1>
-
-
-        
+       @include('components.product-card') 
     </div>
 @endsection

@@ -148,3 +148,22 @@ tipos de middlenware para controllar el login un ejemplo
         $this->middleware('auth')->except(['index','show']); //excepto a estas rutas el login
         $this->middleware('auth')->only(['create','store']);  //solo a estas rutas el login
 ```
+
+
+Creamos un Request 
+```php
+php artisan make:request ProductRequest
+```
+
+crear modelo vista controlador
+```php
+php artisan make:model Image -a
+```
+
+
+para saber fechas
+https://carbon.nesbot.com/docs/
+
+
+
+

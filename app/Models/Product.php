@@ -27,6 +27,12 @@ class Product extends Model
         return 'slug';
     }
 
+    
+
+
+   
+
+
 
 
     public function categories()

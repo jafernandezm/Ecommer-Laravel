@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Dd;
 
+//request
+use App\Http\Requests\ProductRequest;
+
 class ProductController extends Controller
 {
     public function __construct()
@@ -34,29 +37,18 @@ class ProductController extends Controller
     public function create(){
 
         return view('products.create');
+
     }
-    public function store(){
-        $rules=[
-            'title'=> ['required','max:255'],
-            'description'=> ['required','max:1000'],
-            'price'=> ['required','min:1'],
-            'stock'=> ['required','min:0'],
-            'status'=> ['required','in:available,unavailable'],
-        ];
+    public function store(ProductRequest $request){
+        $product= Product::create($request->validated());
+        return redirect()
+        ->route('products.index')
+        ->withSuccess('El producto se creo con exito'); // redirecciona a la ruta index
+
+    
         
-        request()->validate($rules);
-
-        //sesiones para guardar los datos available->'diponiobles' y  unavailable:'no disponibles'
-        if(request()->status =='available' && request()->stock == 0){
-            //session()->put('error','El producto no puede estar disponible sin stock');
-            //redirecciona a la pagina anterior con los datos withInput
-            return redirect()
-            ->back()
-            ->withInput(request()->all())
-            ->withErrors('El stock debe ser mayor a 0 si el producto esta disponible');
-        }
-
-        //session()->forget('error');
+        //->wiht('success','El producto se creo con exito'); // redirecciona a la ruta index
+         //session()->forget('error');
         //forma anterior
         /*$product=Product::create([
             'title' => request('title'),
@@ -66,51 +58,40 @@ class ProductController extends Controller
             'status' => request('status'),
         ]);*/
         //forma rapida
-        $product= Product::create(request()->all());
-        #session()->flash('success','El producto se creo con exito');
-        //formas de redireccionar
-        //return redirect('/products');
-        //return redirect()->back();//manda una redireccion a la pagina anterior
-        //return redirect()->action([ProductController::class, 'index']); //redirecciona a la ruta index
-        return redirect()
-        ->route('products.index')
-        ->withSuccess('El producto se creo con exito'); // redirecciona a la ruta index
-        //->wiht('success','El producto se creo con exito'); // redirecciona a la ruta index
     }
 
 
     public function show($product){
         //obtener el producto el unico que coincida con el id
-        $product=Product::findOrfail($product);
+        //$product=Product::findOrfail($product);
         #$product=DB::table('products')->find($product);
         //$product=DB::table('products')->where('id',$product)->first();
         //dd($product);
+
+
+        $product=Product::findOrfail($product);
 
         return view('products.show')->with([
             'product'=>$product
         ]);
     }
 
-    public function edit($product){
-
-        return view('products.edit')->with([
-            'product' => Product::findOrfail($product),//vista 404 no se encontro la vista
-        ]);
-    }
-    public function update($product){
-        $rules=[
-            'title'=> ['required','max:255'],
-            'description'=> ['required','max:1000'],
-            'price'=> ['required','min:1'],
-            'stock'=> ['required','min:0'],
-            'status'=> ['required','in:available,unavailable'],
-        ];
-        
-        request()->validate($rules);
+    public function edit( $product){
         
         $product=Product::findOrfail($product);
+        
+        return view('products.edit')->with([
+            'product' =>  $product,//vista 404 no se encontro la vista
+        ]);
+    }
+
+    public function update(ProductRequest $request,$product){
+       
+        $product=Product::findOrfail($product);
+
         //actualiza toda la tabla con los datos que se le pasan
-        $product->update(request()->all());
+        $product->update($request->validated());
+
 
         return redirect()
         ->route('products.index')

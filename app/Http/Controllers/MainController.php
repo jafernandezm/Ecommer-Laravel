@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
+use GuzzleHttp\Handler\Proxy;
+
+use App\Models\Product;
+
 class MainController extends Controller
 {
     //
@@ -15,6 +19,8 @@ class MainController extends Controller
         //dd($name);
 
         
-        return view('welcome');
+        return view('welcome')->with([
+            'products' => Product::all(),
+        ]);
     }
 }

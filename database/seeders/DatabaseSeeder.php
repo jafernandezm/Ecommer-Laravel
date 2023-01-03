@@ -6,6 +6,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Product;
+use App\Models\User;
+use App\Models\Cart;
+use App\Models\Payment;
+use App\Models\Image;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +25,9 @@ class DatabaseSeeder extends Seeder
 
         $products =\App\Models\Product::factory(20)->create();
 
+      
+
+        // \App\Models\User::factory(10)->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
