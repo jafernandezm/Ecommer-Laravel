@@ -18,6 +18,8 @@ class OrderFactory extends Factory
     {
         return [
             //
+            'status'=>$this->faker->randomElement(['pending','paid','shipped']),//pendiente de pago, pagado, enviado
+            //'customer_id'=>$this->faker->numberBetween(1,100),
         ];
     }
 }

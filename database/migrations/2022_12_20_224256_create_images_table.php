@@ -19,14 +19,11 @@ return new class extends Migration
             //
             //$table->string('path')->unique();
             $table->timestamps();
+            //apartir de aqui es lo que se agrego
+            $table->morphs('imageable');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('images');

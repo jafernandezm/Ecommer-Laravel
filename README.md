@@ -166,4 +166,6 @@ https://carbon.nesbot.com/docs/
 
 
 
-
+creanmos nuestro modelos muchos a muchos muchos a uno
+ php artisan make:migration CreateOrderProductTable
+ 

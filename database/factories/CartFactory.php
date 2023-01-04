@@ -18,6 +18,7 @@ class CartFactory extends Factory
     {
         return [
             //
+            
         ];
     }
 }

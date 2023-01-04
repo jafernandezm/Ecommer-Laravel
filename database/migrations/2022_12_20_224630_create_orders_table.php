@@ -18,21 +18,15 @@ return new class extends Migration
 
             $table->string('status')->default('pending');
 
+            $table->bigInteger('customer_id')->unsigned();
             //customer_id later 
             //$table->string('payment_method');
-            
-
             $table->timestamps();
 
-
+            $table->foreign('customer_id')->references('id')->on('users');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('orders');

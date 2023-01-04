@@ -16,8 +16,21 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        $filaName=$this->faker->numberBetween(1,10) . '.jpg';
         return [
-            //
+            //las imagenes son de 640x480 y de gatos
+
+            'path'=>"img/products/$filaName"
+
+            
+
         ];
+    }
+
+    public function user(){
+        $filaName=$this->faker->numberBetween(1,5) . '.jpg';
+        return $this->state([
+            'path'=>"img/users/$filaName"
+        ]);
     }
 }
