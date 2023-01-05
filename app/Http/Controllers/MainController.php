@@ -17,10 +17,12 @@ class MainController extends Controller
         $name= config('app.name');
         //dump($name);
         //dd($name);
-
+        $products=Product::available()->get();
         
         return view('welcome')->with([
-            'products' => Product::all(),
+            'products' => $products,
         ]);
+
+
     }
 }

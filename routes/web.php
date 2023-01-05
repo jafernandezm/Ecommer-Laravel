@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ProductCartController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +31,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::resource('products',ProductController::class);
+
+Route::resource('products.carts',ProductCartController::class)->only(['store','destroy']);
+
+Route::resource('carts',CartController::class)->only(['index']);
+
+
 //ruta para mostrar los productos
 
 

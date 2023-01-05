@@ -169,3 +169,7 @@ https://carbon.nesbot.com/docs/
 creanmos nuestro modelos muchos a muchos muchos a uno
  php artisan make:migration CreateOrderProductTable
  
+
+
+ escogemos la compra de producto en un carrito podemos el carrito cart como padre el Producto
+ php artisan make:controller ProductCartCpntroller -m Cart -p Product

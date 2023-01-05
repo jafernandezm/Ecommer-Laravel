@@ -19,7 +19,7 @@ class Cart extends Model
         'status',
     ];*/
 
-    public function product(){
+    public function products(){
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
 
     }

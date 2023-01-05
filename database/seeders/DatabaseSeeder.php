@@ -23,32 +23,66 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user =\App\Models\User::factory(10)->create();
-
-        $products =\App\Models\Product::factory(20)->create();
-
-      
-        $products =\App\Models\Cart::factory(20)->create();
-
-        $orden =\App\Models\Order::factory(5)->create(
-            [
-                'customer_id' => $user->random()->id,
-            ]
-        );
-
+        
+        $users =User::factory(20)
+        ->create()
+        ->each(function($user){
+            $imagen=Image::factory()
+            ->user()
+            ->make();
+            
+            $user->image()->save($imagen);
+        });
+        
         //como obtener el id de una Orden
+        $orders =Order::factory(20)
+        ->make()
+        ->each(function($orden) use ($users){
+            $orden->customer_id = $users->random()->id;
+            $orden->save();
+            
+            $paymant= Payment::factory()->make();
+            
+            $orden->payment()->save($paymant);
+        });
+        
+        $carts =Cart::factory(20)->create();
+        
+        $products =Product::factory(50)
+        ->create()
+        ->each(function($product) use ($orders,$carts){
+            $orders=$orders->random();
+            $orders->products()->attach(
+                $product->id, ['quantity'=> mt_rand(1,3)]
+            );
+
+            $carts=$carts->random();
+            $carts->products()->attach(
+                $product->id, ['quantity'=> mt_rand(1,3)]
+            );
+
+            $imagen=Image::factory(mt_rand(2,4))->make();
+
+            $product->images()->saveMany($imagen);
+
+        });
+        
+
+        
+
+       
         
         
         
-        $products =\App\Models\Payment::factory(5)->create(
+        /*$payment =\App\Models\Payment::factory(5)->create(
             [
-            'order_id' => $orden->random()->id,
+            'order_id' => $orders->random()->id,
            ]
         );
 
 
 
-        $products =\App\Models\Image::factory(10)->create(
+        $imagen =\App\Models\Image::factory(10)->create(
             [
                 'imageable_id' => $products->random()->id,
                 'imageable_type' => Product::class,
@@ -60,18 +94,7 @@ class DatabaseSeeder extends Seeder
                 'imageable_id' => $products->random()->id,
                 'imageable_type' => User::class,
             ]
-        );
+        );*/
 
-
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        
-        //$orden->products()->attach([ 1=> ['quantity'=>4] , 2=> ['quantity'=>3] , 3=> ['quantity'=>12]]);
-        
-        //$orden=$orden->fresh();
-        
     }
 }

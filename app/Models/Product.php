@@ -23,13 +23,7 @@ class Product extends Model
         'stock',
         'status',
     ];
-
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
+    
     public function categories()
     {
         return $this->belongsToMany(Category::class);
@@ -49,8 +43,9 @@ class Product extends Model
     {
         return $this->morphMany( Image::class , 'imageable');
     }
-
-    
-
+    //retornamos productos disponbibles
+    public function scopeAvailable(){
+        return $this->where('status', 'available');
+    }
 
 }
