@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCartController;
 
 /*
@@ -36,6 +37,7 @@ Route::resource('products.carts',ProductCartController::class)->only(['store','d
 
 Route::resource('carts',CartController::class)->only(['index']);
 
+Route::resource('orders',OrderController::class)->only(['create','store']);
 
 //ruta para mostrar los productos
 

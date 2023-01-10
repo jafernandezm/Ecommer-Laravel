@@ -47,5 +47,9 @@ class Product extends Model
     public function scopeAvailable(){
         return $this->where('status', 'available');
     }
+    //retornamso el total de la compra
+    public function getTotalAttribute(){
+        return $this->price * $this->pivot->quantity;
+    }
 
 }

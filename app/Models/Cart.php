@@ -24,6 +24,12 @@ class Cart extends Model
 
     }
     
-   
+     //retornamso el total de la compra
+     public function getTotalAttribute(){
+        //accedemos a la relacion de productos
+        
+        //accedemos a la relacion de productos para la suma de los totales
+        return $this->products->pluck('total')->sum();
+    }
     
 }

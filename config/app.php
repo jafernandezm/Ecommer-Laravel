@@ -81,6 +81,7 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
+    //poner en espanol
 
     'locale' => 'en',
 
@@ -107,8 +108,8 @@ return [
     | localized telephone numbers, street address information and more.
     |
     */
-
-    'faker_locale' => 'en_US',
+    //poner en espanol
+    'faker_locale' => 'es_ES',
 
     /*
     |--------------------------------------------------------------------------

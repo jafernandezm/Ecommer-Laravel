@@ -7,6 +7,7 @@
         <h4 class="card-text"> {{ $product->descripcion }}</h4>             {{-- descripcion-> description--}}
         <h4 class="card-text"> <strong> {{ $product->stock }} </strong></h4>{{-- cantidad-> stock--}}
         @if(isset($cart))
+            <p class="card-text"> {{ $product->pivot->quantity}} producto en tu carrito $<strong>{{$product->total}}</strong></p>
             <form class="d-inline" 
             method="POST" 
             action="{{ route('products.carts.destroy', ['cart'=>$cart->id ,'product'=> $product->id ] ) }}">
@@ -23,9 +24,6 @@
             <button type="submit" class="btn btn-success">Anadir </button>
         </form>
         @endif
-    
-     
-
     </div>
 </div>
 
